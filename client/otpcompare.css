@@ -1,0 +1,28 @@
+body {
+	padding: 0px;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+#header {
+	background: gray;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	margin: 0px 0px 10px 0px;
+	padding: 4px 10px;
+}
+
+.otpcompare-scenarioContainer {
+	margin-bottom: 16px;
+}
+
+.otpcompare-scenarioBox {
+	border: solid 3px;
+}
+
+.otpcompare-scenarioHeader {
+	padding: 1px 4px 4px 4px;
+	color: #fff;
+	font-size: 16px;
+	font-weight: bold;
+}
