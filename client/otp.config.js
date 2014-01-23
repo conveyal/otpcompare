@@ -15,13 +15,13 @@ var OTP_config = {
 			"id": "existing",
 			"name": "Existing Network",
 			"otpApi": "http://54.252.109.53:8001/otp-rest-servlet/ws",
-			"color": "#800"
+			"color": "#008"
 		},
 		{
 			"id": "proposed",
 			"name": "Proposed Network",
 			"otpApi": "http://54.252.109.53:8002/otp-rest-servlet/ws",
-			"color": "#008"
+			"color": "#800"
 		}
 	] 
 };
