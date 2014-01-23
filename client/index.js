@@ -52,9 +52,10 @@ function App() {
 
     this.requestModel = new OTP.models.OtpPlanRequest();//{}, {urlRoot: OTP.config.otpApi + '/plan' }); 
 
+    this.activeRequests = {}; // maps scenarioIds to OtpPlanRequest objects
 
     // remove the default change functionality
-    this.requestModel.off('change');    
+    this.requestModel.off('change');
 
     this.requestModel.on('change', _.bind(function() {
 
@@ -67,9 +68,17 @@ function App() {
                 scenario.lastResponse.get("itineraries").activeItinerary.trigger("deactivate");
             }                
             
+            var scenarioRequest;
+            if(scenarioId in this.activeRequests) {
+                var activeRequest = this.activeRequests[scenarioId];
+                activeRequest.off('success');
+            }
+
             // set up the new request
-            var scenarioRequest = this.requestModel.clone();
+            scenarioRequest = this.requestModel.clone();
             scenarioRequest.urlRoot = scenario.otpApi + '/plan';
+            this.activeRequests[scenarioId] = scenarioRequest;
+
             scenarioRequest.request();
             scenarioRequest.on('success', _.bind(function(response) {
                 this.app.scenarioResponse(this.scenario, response);
