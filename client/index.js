@@ -11,6 +11,15 @@ $(document).ready(function() {
     new App();
 });
 
+var clearResultsButtonTemplate = Handlebars.compile([
+    '<div class="clearResults row">', 
+        '<div class="col-sm-12">', 
+            '<button class="btn btn-default col-sm-12 clearResultsButton">Clear Results</span></button>',
+        '</div>',
+    '</div>',
+].join('\n'));
+
+
 function App() {
 
     $("#header").html(OTP.config.siteTitle);
@@ -87,6 +96,10 @@ function App() {
             // show the "loading.." view
             if(scenarioRequest.get('fromPlace') && scenarioRequest.get('toPlace')) {
                 this.hideOptions();
+
+                // show the clear results button
+                $("#footer").find('.clearResults').show();
+
                 scenario.el.html(scenarioSummaryLoadingTemplate({
                     scenario: scenario
                 }));
@@ -118,7 +131,40 @@ function App() {
     
     $("#narrative").append(welcomeNarrativeTemplate());
 
+    $("#footer").append(clearResultsButtonTemplate());
+    $("#footer").find('.clearResults').hide();
+    $("#footer").find('.clearResultsButton').click(_.bind(function() {
 
+        for(scenarioId in this.scenarios) {
+            var scenario = this.scenarios[scenarioId];
+
+            // fire a deactivate response to remove the results from the map
+            if(scenario.lastResponse && scenario.lastResponse.get("itineraries") && scenario.lastResponse.get("itineraries").activeItinerary) {
+                scenario.lastResponse.get("itineraries").activeItinerary.trigger("deactivate");
+            }  
+
+            // stop listening for a request reponse
+            if(scenarioId in this.activeRequests) {
+                this.activeRequests[scenarioId].off('success');
+            }
+
+            // clear the scenario's narrative summary element
+            scenario.el.empty();
+        }
+
+        // remove the start/end markers and reset the request values to null
+        this.requestMapView.clearLayers();
+        //this.requestModel.clear({ silent : true });
+        this.requestModel.set({ fromPlace : null, toPlace: null }, { silent : true });
+
+        $("#narrative").append(welcomeNarrativeTemplate());
+
+        $("#footer").find('.clearResults').hide();
+
+        if(!$('#hidableSettings').is(":visible")) {
+            this.requestView.toggleSettings();
+        }        
+    }, this));
 
     // set up the window resize functionality
     $(window).resize(_.bind(function() {
