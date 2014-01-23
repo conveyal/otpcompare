@@ -38580,6 +38580,14 @@ module.exports.OtpItineraryMapView = Backbone.View.extend({\n\
 \n\
 \n\
 \n\
+var mapContextMenuTemplate = Handlebars.compile([\n\
+    '<div class=\"otp-mapContextMenu\">',\n\
+        '<div class=\"otp-mapContextMenuItem setStartLocation\">Set Start Location</div>',\n\
+        '<div class=\"otp-mapContextMenuItem setEndLocation\">Set End Location</div>',\n\
+    '</div>'\n\
+].join('\\n\
+'));\n\
+\n\
 module.exports.OtpRequestMapView = Backbone.View.extend({\n\
  \n\
     initialize : function(options) {\n\
@@ -38592,6 +38600,33 @@ module.exports.OtpRequestMapView = Backbone.View.extend({\n\
         this.options.map.on('click', function(evt) {\n\
             view.mapClick(evt.latlng);\n\
         });\n\
+\n\
+        this.options.map.on('contextmenu', _.bind(function(evt) {\n\
+            var mouseEvent = evt.originalEvent;\n\
+            mouseEvent.preventDefault();\n\
+            if(mouseEvent.which === 3) {\n\
+\n\
+                if(!this.contextMenu) {\n\
+                    this.contextMenu = $(mapContextMenuTemplate()).appendTo('body')\n\
+                }\n\
+\n\
+                this.contextMenu.find('.setStartLocation').click(_.bind(function() {\n\
+                    this.model.set({fromPlace: evt.latlng.lat + ',' + evt.latlng.lng});\n\
+                }, this));\n\
+\n\
+                this.contextMenu.find('.setEndLocation').click(_.bind(function() {\n\
+                    this.model.set({toPlace: evt.latlng.lat + ',' + evt.latlng.lng});\n\
+                }, this));\n\
+                \n\
+                this.contextMenu.show()\n\
+                    .css({top: mouseEvent.pageY + 'px', left: mouseEvent.pageX + 'px'});\n\
+            }\n\
+            return false;\n\
+        }, this));\n\
+\n\
+        $(document).bind(\"click\", _.bind(function(event) {\n\
+            if(this.contextMenu) this.contextMenu.hide();\n\
+        }, this));\n\
 \n\
         this.attachedToMap = false;\n\
 \n\
