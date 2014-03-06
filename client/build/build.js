@@ -39191,7 +39191,7 @@ var requestFormTemplate = Handlebars.compile([\n\
 \n\
                      '<div class=\"row arriveByControl\">', \n\
                         '<div class=\"col-md-12\">', \n\
-                            '<select id=\"arriveBy\" class=\"apiParam form-control\" placeholder=\"Arrive\"><option value=\"true\">Arrive at</option><option value=\"false\" selected>Depart by</option></select>', \n\
+                            '<select id=\"arriveBy\" class=\"apiParam form-control\" placeholder=\"Arrive\"><option value=\"true\" selected>Arrive at</option><option value=\"false\">Depart by</option></select>', \n\
                         '</div>', \n\
                     '</div>', \n\
 \n\
@@ -39246,9 +39246,10 @@ var requestFormTemplate = Handlebars.compile([\n\
                                 '<select id=\"maxWalkDistance\" class=\"apiParam form-control\" placeholder=\"Arrive\">', \n\
                                     '<option value=\"250\">1/4 km</option>', \n\
                                     '<option value=\"500\">1/2 km</option>', \n\
-                                    '<option value=\"1000\" selected>1 km</option>', \n\
+                                    '<option value=\"1000\">1 km</option>', \n\
                                     '<option value=\"2500\">2.5 km</option>', \n\
                                     '<option value=\"5000\">5 km</option>', \n\
+                                    '<option value=\"10000\" selected>10 km</option>', \n\
                                 '</select>', \n\
                             '</div>', \n\
                         '{{/metric}}',\n\
