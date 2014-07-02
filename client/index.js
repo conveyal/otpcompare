@@ -1,9 +1,10 @@
 var _ = require('underscore');
-var L = require('leaflet');
 var Handlebars = require('handlebars');
 var Backbone = require('backbone');
 
-var OTP = require('otp.js');
+var $ = window.jQuery = require('jquery');
+
+var OTP = require('otpjs');
 OTP.config = OTP_config;
 
 
@@ -295,7 +296,7 @@ var ScenarioSummaryView = Backbone.View.extend({
         this.$el.find('.details').hide();
         this.$el.find('.hideDetails').hide();
 
-        var responseView = this.responseView = new OTP.views.OtpPlanResponseView({
+        this.responseView = new OTP.views.OtpPlanResponseView({
             narrative: this.$el.find('.details'),
             map: this.options.map,
             autoResize: false,
@@ -303,8 +304,10 @@ var ScenarioSummaryView = Backbone.View.extend({
             metric: OTP.config.metric,
             showFullDuration: true
         });
-        responseView.model = this.model;
-        responseView.render();
+        this.responseView.model = this.model;
+
+        this.responseView.render();
+
         this.$el.find(".messageWell").hide();
 
     },

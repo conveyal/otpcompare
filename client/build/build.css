@@ -1,470 +1,1106 @@
-/* required styles */
+/*
+Version: @@ver@@ Timestamp: @@timestamp@@
+*/
+.select2-container {
+    margin: 0;
+    position: relative;
+    display: inline-block;
+    /* inline-block for ie7 */
+    zoom: 1;
+    *display: inline;
+    vertical-align: middle;
+}
 
-.leaflet-map-pane,
-.leaflet-tile,
-.leaflet-marker-icon,
-.leaflet-marker-shadow,
-.leaflet-tile-pane,
-.leaflet-tile-container,
-.leaflet-overlay-pane,
-.leaflet-shadow-pane,
-.leaflet-marker-pane,
-.leaflet-popup-pane,
-.leaflet-overlay-pane svg,
-.leaflet-zoom-box,
-.leaflet-image-layer,
-.leaflet-layer {
-	position: absolute;
-	left: 0;
-	top: 0;
-	}
-.leaflet-container {
-	overflow: hidden;
-	-ms-touch-action: none;
-	}
-.leaflet-tile,
-.leaflet-marker-icon,
-.leaflet-marker-shadow {
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-	        user-select: none;
-	-webkit-user-drag: none;
-	}
-.leaflet-marker-icon,
-.leaflet-marker-shadow {
-	display: block;
-	}
-/* map is broken in FF if you have max-width: 100% on tiles */
-.leaflet-container img {
-	max-width: none !important;
-	}
-/* stupid Android 2 doesn't understand "max-width: none" properly */
-.leaflet-container img.leaflet-image-layer {
-	max-width: 15000px !important;
-	}
-.leaflet-tile {
-	filter: inherit;
-	visibility: hidden;
-	}
-.leaflet-tile-loaded {
-	visibility: inherit;
-	}
-.leaflet-zoom-box {
-	width: 0;
-	height: 0;
-	}
-/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
-.leaflet-overlay-pane svg {
-	-moz-user-select: none;
-	}
+.select2-container,
+.select2-drop,
+.select2-search,
+.select2-search input {
+  /*
+    Force border-box so that % widths fit the parent
+    container without overlap because of margin/padding.
+    More Info : http://www.quirksmode.org/css/box.html
+  */
+  -webkit-box-sizing: border-box; /* webkit */
+     -moz-box-sizing: border-box; /* firefox */
+          box-sizing: border-box; /* css3 */
+}
 
-.leaflet-tile-pane    { z-index: 2; }
-.leaflet-objects-pane { z-index: 3; }
-.leaflet-overlay-pane { z-index: 4; }
-.leaflet-shadow-pane  { z-index: 5; }
-.leaflet-marker-pane  { z-index: 6; }
-.leaflet-popup-pane   { z-index: 7; }
+.select2-container .select2-choice {
+    display: block;
+    height: 26px;
+    padding: 0 0 0 8px;
+    overflow: hidden;
+    position: relative;
 
+    border: 1px solid #aaa;
+    white-space: nowrap;
+    line-height: 26px;
+    color: #444;
+    text-decoration: none;
 
-/* control positioning */
+    border-radius: 4px;
 
-.leaflet-control {
-	position: relative;
-	z-index: 7;
-	pointer-events: auto;
-	}
-.leaflet-top,
-.leaflet-bottom {
-	position: absolute;
-	z-index: 1000;
-	pointer-events: none;
-	}
-.leaflet-top {
-	top: 0;
-	}
-.leaflet-right {
-	right: 0;
-	}
-.leaflet-bottom {
-	bottom: 0;
-	}
-.leaflet-left {
-	left: 0;
-	}
-.leaflet-control {
-	float: left;
-	clear: both;
-	}
-.leaflet-right .leaflet-control {
-	float: right;
-	}
-.leaflet-top .leaflet-control {
-	margin-top: 10px;
-	}
-.leaflet-bottom .leaflet-control {
-	margin-bottom: 10px;
-	}
-.leaflet-left .leaflet-control {
-	margin-left: 10px;
-	}
-.leaflet-right .leaflet-control {
-	margin-right: 10px;
-	}
+    background-clip: padding-box;
 
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
 
-/* zoom and fade animations */
+    background-color: #fff;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.5, #fff));
+    background-image: -webkit-linear-gradient(center bottom, #eee 0%, #fff 50%);
+    background-image: -moz-linear-gradient(center bottom, #eee 0%, #fff 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#eeeeee', GradientType = 0);
+    background-image: linear-gradient(to top, #eee 0%, #fff 50%);
+}
 
-.leaflet-fade-anim .leaflet-tile,
-.leaflet-fade-anim .leaflet-popup {
-	opacity: 0;
-	-webkit-transition: opacity 0.2s linear;
-	   -moz-transition: opacity 0.2s linear;
-	     -o-transition: opacity 0.2s linear;
-	        transition: opacity 0.2s linear;
-	}
-.leaflet-fade-anim .leaflet-tile-loaded,
-.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
-	opacity: 1;
-	}
+.select2-container.select2-drop-above .select2-choice {
+    border-bottom-color: #aaa;
 
-.leaflet-zoom-anim .leaflet-zoom-animated {
-	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
-	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
-	     -o-transition:      -o-transform 0.25s cubic-bezier(0,0,0.25,1);
-	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
-	}
-.leaflet-zoom-anim .leaflet-tile,
-.leaflet-pan-anim .leaflet-tile,
-.leaflet-touching .leaflet-zoom-animated {
-	-webkit-transition: none;
-	   -moz-transition: none;
-	     -o-transition: none;
-	        transition: none;
-	}
+    border-radius: 0 0 4px 4px;
 
-.leaflet-zoom-anim .leaflet-zoom-hide {
-	visibility: hidden;
-	}
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #eee), color-stop(0.9, #fff));
+    background-image: -webkit-linear-gradient(center bottom, #eee 0%, #fff 90%);
+    background-image: -moz-linear-gradient(center bottom, #eee 0%, #fff 90%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#eeeeee', GradientType=0);
+    background-image: linear-gradient(to bottom, #eee 0%, #fff 90%);
+}
 
+.select2-container.select2-allowclear .select2-choice .select2-chosen {
+    margin-right: 42px;
+}
 
-/* cursors */
+.select2-container .select2-choice > .select2-chosen {
+    margin-right: 26px;
+    display: block;
+    overflow: hidden;
 
-.leaflet-clickable {
-	cursor: pointer;
-	}
-.leaflet-container {
-	cursor: -webkit-grab;
-	cursor:    -moz-grab;
-	}
-.leaflet-popup-pane,
-.leaflet-control {
-	cursor: auto;
-	}
-.leaflet-dragging,
-.leaflet-dragging .leaflet-clickable,
-.leaflet-dragging .leaflet-container {
-	cursor: move;
-	cursor: -webkit-grabbing;
-	cursor:    -moz-grabbing;
-	}
+    white-space: nowrap;
 
+    text-overflow: ellipsis;
+    float: none;
+    width: auto;
+}
 
-/* visual tweaks */
+.select2-container .select2-choice abbr {
+    display: none;
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    right: 24px;
+    top: 8px;
 
-.leaflet-container {
-	background: #ddd;
-	outline: 0;
-	}
-.leaflet-container a {
-	color: #0078A8;
-	}
-.leaflet-container a.leaflet-active {
-	outline: 2px solid orange;
-	}
-.leaflet-zoom-box {
-	border: 2px dotted #05f;
-	background: white;
-	opacity: 0.5;
-	}
+    font-size: 1px;
+    text-decoration: none;
 
+    border: 0;
+    background: url("kpwebb-select2/select2.png") right top no-repeat;
+    cursor: pointer;
+    outline: 0;
+}
 
-/* general typography */
-.leaflet-container {
-	font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
-	}
+.select2-container.select2-allowclear .select2-choice abbr {
+    display: inline-block;
+}
 
+.select2-container .select2-choice abbr:hover {
+    background-position: right -11px;
+    cursor: pointer;
+}
 
-/* general toolbar styles */
+.select2-drop-mask {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    min-height: 100%;
+    min-width: 100%;
+    height: auto;
+    width: auto;
+    opacity: 0;
+    z-index: 9998;
+    /* styles required for IE to work */
+    background-color: #fff;
+    filter: alpha(opacity=0);
+}
 
-.leaflet-bar {
-	box-shadow: 0 1px 7px rgba(0,0,0,0.65);
-	-webkit-border-radius: 4px;
-	        border-radius: 4px;
-	}
-.leaflet-bar a, .leaflet-bar a:hover {
-	background-color: #fff;
-	border-bottom: 1px solid #ccc;
-	width: 26px;
-	height: 26px;
-	line-height: 26px;
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	color: black;
-	}
-.leaflet-bar a,
-.leaflet-control-layers-toggle {
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	display: block;
-	}
-.leaflet-bar a:hover {
-	background-color: #f4f4f4;
-	}
-.leaflet-bar a:first-child {
-	-webkit-border-top-left-radius: 4px;
-	        border-top-left-radius: 4px;
-	-webkit-border-top-right-radius: 4px;
-	        border-top-right-radius: 4px;
-	}
-.leaflet-bar a:last-child {
-	-webkit-border-bottom-left-radius: 4px;
-	        border-bottom-left-radius: 4px;
-	-webkit-border-bottom-right-radius: 4px;
-	        border-bottom-right-radius: 4px;
-	border-bottom: none;
-	}
-.leaflet-bar a.leaflet-disabled {
-	cursor: default;
-	background-color: #f4f4f4;
-	color: #bbb;
-	}
+.select2-drop {
+    width: 100%;
+    margin-top: -1px;
+    position: absolute;
+    z-index: 9999;
+    top: 100%;
+    margin-left: 5px;
+    background: #fff;
+    color: #000;
+    border: 1px solid #aaa;
+    border-top: 0;
 
-.leaflet-touch .leaflet-bar {
-	-webkit-border-radius: 10px;
-	        border-radius: 10px;
-	}
-.leaflet-touch .leaflet-bar a {
-	width: 30px;
-	height: 30px;
-	}
-.leaflet-touch .leaflet-bar a:first-child {
-	-webkit-border-top-left-radius: 7px;
-	        border-top-left-radius: 7px;
-	-webkit-border-top-right-radius: 7px;
-	        border-top-right-radius: 7px;
-	}
-.leaflet-touch .leaflet-bar a:last-child {
-	-webkit-border-bottom-left-radius: 7px;
-	        border-bottom-left-radius: 7px;
-	-webkit-border-bottom-right-radius: 7px;
-	        border-bottom-right-radius: 7px;
-	border-bottom: none;
-	}
+    border-radius: 0 0 4px 4px;
 
+    -webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+            box-shadow: 0 4px 5px rgba(0, 0, 0, .15);
+}
 
-/* zoom control */
+.select2-drop.select2-drop-above {
+    margin-top: 1px;
+    border-top: 1px solid #aaa;
+    border-bottom: 0;
 
-.leaflet-control-zoom-in {
-	font: bold 18px 'Lucida Console', Monaco, monospace;
-	}
-.leaflet-control-zoom-out {
-	font: bold 22px 'Lucida Console', Monaco, monospace;
-	}
+    border-radius: 4px 4px 0 0;
 
-.leaflet-touch .leaflet-control-zoom-in {
-	font-size: 22px;
-	line-height: 30px;
-	}
-.leaflet-touch .leaflet-control-zoom-out {
-	font-size: 28px;
-	line-height: 30px;
-	}
+    -webkit-box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+            box-shadow: 0 -4px 5px rgba(0, 0, 0, .15);
+}
 
+.select2-drop-active {
+    border: 1px solid #5897fb;
+    border-top: none;
+}
 
-/* layers control */
+.select2-drop.select2-drop-above.select2-drop-active {
+    border-top: 1px solid #5897fb;
+}
 
-.leaflet-control-layers {
-	box-shadow: 0 1px 7px rgba(0,0,0,0.4);
-	background: #f8f8f9;
-	-webkit-border-radius: 5px;
-	        border-radius: 5px;
-	}
-.leaflet-control-layers-toggle {
-	background-image: url(".//leaflet/./images/layers.png");
-	width: 36px;
-	height: 36px;
-	}
-.leaflet-retina .leaflet-control-layers-toggle {
-	background-image: url(".//leaflet/./images/layers-2x.png");
-	background-size: 26px 26px;
-	}
-.leaflet-touch .leaflet-control-layers-toggle {
-	width: 44px;
-	height: 44px;
-	}
-.leaflet-control-layers .leaflet-control-layers-list,
-.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
-	display: none;
-	}
-.leaflet-control-layers-expanded .leaflet-control-layers-list {
-	display: block;
-	position: relative;
-	}
-.leaflet-control-layers-expanded {
-	padding: 6px 10px 6px 6px;
-	color: #333;
-	background: #fff;
-	}
-.leaflet-control-layers-selector {
-	margin-top: 2px;
-	position: relative;
-	top: 1px;
-	}
-.leaflet-control-layers label {
-	display: block;
-	}
-.leaflet-control-layers-separator {
-	height: 0;
-	border-top: 1px solid #ddd;
-	margin: 5px -10px 5px -6px;
-	}
+.select2-drop-auto-width {
+    border-top: 1px solid #aaa;
+    width: auto;
+}
 
+.select2-drop-auto-width .select2-search {
+    padding-top: 4px;
+}
 
-/* attribution and scale controls */
+.select2-container .select2-choice .select2-arrow {
+    display: inline-block;
+    width: 18px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
 
-.leaflet-container .leaflet-control-attribution {
-	background-color: rgba(255, 255, 255, 0.7);
-	box-shadow: 0 0 5px #bbb;
-	margin: 0;
-	}
-.leaflet-control-attribution,
-.leaflet-control-scale-line {
-	padding: 0 5px;
-	color: #333;
-	}
-.leaflet-container .leaflet-control-attribution,
-.leaflet-container .leaflet-control-scale {
-	font-size: 11px;
-	}
-.leaflet-left .leaflet-control-scale {
-	margin-left: 5px;
-	}
-.leaflet-bottom .leaflet-control-scale {
-	margin-bottom: 5px;
-	}
-.leaflet-control-scale-line {
-	border: 2px solid #777;
-	border-top: none;
-	color: black;
-	line-height: 1.1;
-	padding: 2px 5px 1px;
-	font-size: 11px;
-	text-shadow: 1px 1px 1px #fff;
-	background-color: rgba(255, 255, 255, 0.5);
-	box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2);
-	white-space: nowrap;
-	overflow: hidden;
-	}
-.leaflet-control-scale-line:not(:first-child) {
-	border-top: 2px solid #777;
-	border-bottom: none;
-	margin-top: -2px;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-	}
-.leaflet-control-scale-line:not(:first-child):not(:last-child) {
-	border-bottom: 2px solid #777;
-	}
+    border-left: 1px solid #aaa;
+    border-radius: 0 4px 4px 0;
 
-.leaflet-touch .leaflet-control-attribution,
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-	box-shadow: none;
-	}
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-	border: 4px solid rgba(0,0,0,0.3);
-	}
+    background-clip: padding-box;
+
+    background: #ccc;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #ccc), color-stop(0.6, #eee));
+    background-image: -webkit-linear-gradient(center bottom, #ccc 0%, #eee 60%);
+    background-image: -moz-linear-gradient(center bottom, #ccc 0%, #eee 60%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#eeeeee', endColorstr = '#cccccc', GradientType = 0);
+    background-image: linear-gradient(to top, #ccc 0%, #eee 60%);
+}
+
+.select2-container .select2-choice .select2-arrow b {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url("kpwebb-select2/select2.png") no-repeat 0 1px;
+}
+
+.select2-search {
+    display: inline-block;
+    width: 100%;
+    min-height: 26px;
+    margin: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+
+    position: relative;
+    z-index: 10000;
+
+    white-space: nowrap;
+}
+
+.select2-search input {
+    width: 100%;
+    height: auto !important;
+    min-height: 26px;
+    padding: 4px 20px 4px 5px;
+    margin: 0;
+
+    outline: 0;
+    font-family: sans-serif;
+    font-size: 1em;
+
+    border: 1px solid #aaa;
+    border-radius: 0;
+
+    -webkit-box-shadow: none;
+            box-shadow: none;
+
+    background: #fff url("kpwebb-select2/select2.png") no-repeat 100% -22px;
+    background: url("kpwebb-select2/select2.png") no-repeat 100% -22px, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
+    background: url("kpwebb-select2/select2.png") no-repeat 100% -22px, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
+    background: url("kpwebb-select2/select2.png") no-repeat 100% -22px, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
+    background: url("kpwebb-select2/select2.png") no-repeat 100% -22px, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0;
+}
+
+.select2-drop.select2-drop-above .select2-search input {
+    margin-top: 4px;
+}
+
+.select2-search input.select2-active {
+    background: #fff url("kpwebb-select2/select2-spinner.gif") no-repeat 100%;
+    background: url("kpwebb-select2/select2-spinner.gif") no-repeat 100%, -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #fff), color-stop(0.99, #eee));
+    background: url("kpwebb-select2/select2-spinner.gif") no-repeat 100%, -webkit-linear-gradient(center bottom, #fff 85%, #eee 99%);
+    background: url("kpwebb-select2/select2-spinner.gif") no-repeat 100%, -moz-linear-gradient(center bottom, #fff 85%, #eee 99%);
+    background: url("kpwebb-select2/select2-spinner.gif") no-repeat 100%, linear-gradient(to bottom, #fff 85%, #eee 99%) 0 0;
+}
+
+.select2-container-active .select2-choice,
+.select2-container-active .select2-choices {
+    border: 1px solid #5897fb;
+    outline: none;
+
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+            box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+
+.select2-dropdown-open .select2-choice {
+    border-bottom-color: transparent;
+    -webkit-box-shadow: 0 1px 0 #fff inset;
+            box-shadow: 0 1px 0 #fff inset;
+
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    background-color: #eee;
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #fff), color-stop(0.5, #eee));
+    background-image: -webkit-linear-gradient(center bottom, #fff 0%, #eee 50%);
+    background-image: -moz-linear-gradient(center bottom, #fff 0%, #eee 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#ffffff', GradientType=0);
+    background-image: linear-gradient(to top, #fff 0%, #eee 50%);
+}
+
+.select2-dropdown-open.select2-drop-above .select2-choice,
+.select2-dropdown-open.select2-drop-above .select2-choices {
+    border: 1px solid #5897fb;
+    border-top-color: transparent;
+
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(0.5, #eee));
+    background-image: -webkit-linear-gradient(center top, #fff 0%, #eee 50%);
+    background-image: -moz-linear-gradient(center top, #fff 0%, #eee 50%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#ffffff', GradientType=0);
+    background-image: linear-gradient(to bottom, #fff 0%, #eee 50%);
+}
+
+.select2-dropdown-open .select2-choice .select2-arrow {
+    background: transparent;
+    border-left: none;
+    filter: none;
+}
+.select2-dropdown-open .select2-choice .select2-arrow b {
+    background-position: -18px 1px;
+}
+
+.select2-hidden-accessible {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/* results */
+.select2-results {
+    max-height: 200px;
+    padding: 0 0 0 4px;
+    margin: 4px 4px 4px 0;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.select2-results ul.select2-result-sub {
+    margin: 0;
+    padding-left: 0;
+}
+
+.select2-results li {
+    list-style: none;
+    display: list-item;
+    background-image: none;
+}
+
+.select2-results li.select2-result-with-children > .select2-result-label {
+    font-weight: bold;
+}
+
+.select2-results .select2-result-label {
+    padding: 3px 7px 4px;
+    margin: 0;
+    cursor: pointer;
+
+    min-height: 1em;
+
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+}
+
+.select2-results-dept-1 .select2-result-label { padding-left: 20px }
+.select2-results-dept-2 .select2-result-label { padding-left: 40px }
+.select2-results-dept-3 .select2-result-label { padding-left: 60px }
+.select2-results-dept-4 .select2-result-label { padding-left: 80px }
+.select2-results-dept-5 .select2-result-label { padding-left: 100px }
+.select2-results-dept-6 .select2-result-label { padding-left: 110px }
+.select2-results-dept-7 .select2-result-label { padding-left: 120px }
+
+.select2-results .select2-highlighted {
+    background: #3875d7;
+    color: #fff;
+}
+
+.select2-results li em {
+    background: #feffde;
+    font-style: normal;
+}
+
+.select2-results .select2-highlighted em {
+    background: transparent;
+}
+
+.select2-results .select2-highlighted ul {
+    background: #fff;
+    color: #000;
+}
 
 
-/* popup */
+.select2-results .select2-no-results,
+.select2-results .select2-searching,
+.select2-results .select2-selection-limit {
+    background: #f4f4f4;
+    display: list-item;
+    padding-left: 5px;
+}
 
-.leaflet-popup {
-	position: absolute;
-	text-align: center;
-	}
-.leaflet-popup-content-wrapper {
-	padding: 1px;
-	text-align: left;
-	-webkit-border-radius: 12px;
-	        border-radius: 12px;
-	}
-.leaflet-popup-content {
-	margin: 13px 19px;
-	line-height: 1.4;
-	}
-.leaflet-popup-content p {
-	margin: 18px 0;
-	}
-.leaflet-popup-tip-container {
-	margin: 0 auto;
-	width: 40px;
-	height: 20px;
-	position: relative;
-	overflow: hidden;
-	}
-.leaflet-popup-tip {
-	width: 17px;
-	height: 17px;
-	padding: 1px;
+/*
+disabled look for disabled choices in the results dropdown
+*/
+.select2-results .select2-disabled.select2-highlighted {
+    color: #666;
+    background: #f4f4f4;
+    display: list-item;
+    cursor: default;
+}
+.select2-results .select2-disabled {
+  background: #f4f4f4;
+  display: list-item;
+  cursor: default;
+}
 
-	margin: -10px auto 0;
+.select2-results .select2-selected {
+    display: none;
+}
 
-	-webkit-transform: rotate(45deg);
-	   -moz-transform: rotate(45deg);
-	    -ms-transform: rotate(45deg);
-	     -o-transform: rotate(45deg);
-	        transform: rotate(45deg);
-	}
-.leaflet-popup-content-wrapper, .leaflet-popup-tip {
-	background: white;
+.select2-more-results.select2-active {
+    background: #f4f4f4 url("kpwebb-select2/select2-spinner.gif") no-repeat 100%;
+}
 
-	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-	}
-.leaflet-container a.leaflet-popup-close-button {
-	position: absolute;
-	top: 0;
-	right: 0;
-	padding: 4px 4px 0 0;
-	text-align: center;
-	width: 18px;
-	height: 14px;
-	font: 16px/14px Tahoma, Verdana, sans-serif;
-	color: #c3c3c3;
-	text-decoration: none;
-	font-weight: bold;
-	background: transparent;
-	}
-.leaflet-container a.leaflet-popup-close-button:hover {
-	color: #999;
-	}
-.leaflet-popup-scrolled {
-	overflow: auto;
-	border-bottom: 1px solid #ddd;
-	border-top: 1px solid #ddd;
-	}
+.select2-more-results {
+    background: #f4f4f4;
+    display: list-item;
+}
+
+/* disabled styles */
+
+.select2-container.select2-container-disabled .select2-choice {
+    background-color: #f4f4f4;
+    background-image: none;
+    border: 1px solid #ddd;
+    cursor: default;
+}
+
+.select2-container.select2-container-disabled .select2-choice .select2-arrow {
+    background-color: #f4f4f4;
+    background-image: none;
+    border-left: 0;
+}
+
+.select2-container.select2-container-disabled .select2-choice abbr {
+    display: none;
+}
 
 
-/* div icon */
+/* multiselect */
 
-.leaflet-div-icon {
-	background: #fff;
-	border: 1px solid #666;
-	}
-.leaflet-editing-icon {
-	-webkit-border-radius: 2px;
-	        border-radius: 2px;
-	}
+.select2-container-multi .select2-choices {
+    height: auto !important;
+    height: 1%;
+    margin: 0;
+    padding: 0 5px 0 0;
+    position: relative;
+
+    border: 1px solid #aaa;
+    cursor: text;
+    overflow: hidden;
+
+    background-color: #fff;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(1%, #eee), color-stop(15%, #fff));
+    background-image: -webkit-linear-gradient(top, #eee 1%, #fff 15%);
+    background-image: -moz-linear-gradient(top, #eee 1%, #fff 15%);
+    background-image: linear-gradient(to bottom, #eee 1%, #fff 15%);
+}
+
+.select2-locked {
+  padding: 3px 5px 3px 5px !important;
+}
+
+.select2-container-multi .select2-choices {
+    min-height: 26px;
+}
+
+.select2-container-multi.select2-container-active .select2-choices {
+    border: 1px solid #5897fb;
+    outline: none;
+
+    -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+            box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+}
+.select2-container-multi .select2-choices li {
+    float: left;
+    list-style: none;
+}
+html[dir="rtl"] .select2-container-multi .select2-choices li
+{
+    float: right;
+}
+.select2-container-multi .select2-choices .select2-search-field {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+    padding: 5px;
+    margin: 1px 0;
+
+    font-family: sans-serif;
+    font-size: 100%;
+    color: #666;
+    outline: 0;
+    border: 0;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+    background: transparent !important;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input.select2-active {
+    background: #fff url("kpwebb-select2/select2-spinner.gif") no-repeat 100% !important;
+}
+
+.select2-default {
+    color: #999 !important;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice {
+    padding: 3px 5px 3px 18px;
+    margin: 3px 0 3px 5px;
+    position: relative;
+
+    line-height: 13px;
+    color: #333;
+    cursor: default;
+    border: 1px solid #aaaaaa;
+
+    border-radius: 3px;
+
+    -webkit-box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0 2px #fff inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+
+    background-clip: padding-box;
+
+    -webkit-touch-callout: none;
+      -webkit-user-select: none;
+         -moz-user-select: none;
+          -ms-user-select: none;
+              user-select: none;
+
+    background-color: #e4e4e4;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#eeeeee', endColorstr='#f4f4f4', GradientType=0);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, color-stop(20%, #f4f4f4), color-stop(50%, #f0f0f0), color-stop(52%, #e8e8e8), color-stop(100%, #eee));
+    background-image: -webkit-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+    background-image: -moz-linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+    background-image: linear-gradient(to top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%);
+}
+html[dir="rtl"] .select2-container-multi .select2-choices .select2-search-choice
+{
+    margin-left: 0;
+    margin-right: 5px;
+}
+.select2-container-multi .select2-choices .select2-search-choice .select2-chosen {
+    cursor: default;
+}
+.select2-container-multi .select2-choices .select2-search-choice-focus {
+    background: #d4d4d4;
+}
+
+.select2-search-choice-close {
+    display: block;
+    width: 12px;
+    height: 13px;
+    position: absolute;
+    right: 3px;
+    top: 4px;
+
+    font-size: 1px;
+    outline: none;
+    background: url("kpwebb-select2/select2.png") right top no-repeat;
+}
+html[dir="rtl"] .select2-search-choice-close {
+    right: auto;
+    left: 3px;
+}
+
+.select2-container-multi .select2-search-choice-close {
+    left: 3px;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice .select2-search-choice-close:hover {
+  background-position: right -11px;
+}
+.select2-container-multi .select2-choices .select2-search-choice-focus .select2-search-choice-close {
+    background-position: right -11px;
+}
+
+/* disabled styles */
+.select2-container-multi.select2-container-disabled .select2-choices {
+    background-color: #f4f4f4;
+    background-image: none;
+    border: 1px solid #ddd;
+    cursor: default;
+}
+
+.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice {
+    padding: 3px 5px 3px 5px;
+    border: 1px solid #ddd;
+    background-image: none;
+    background-color: #f4f4f4;
+}
+
+.select2-container-multi.select2-container-disabled .select2-choices .select2-search-choice .select2-search-choice-close {    display: none;
+    background: none;
+}
+/* end multiselect */
+
+
+.select2-result-selectable .select2-match,
+.select2-result-unselectable .select2-match {
+    text-decoration: underline;
+}
+
+.select2-offscreen, .select2-offscreen:focus {
+    clip: rect(0 0 0 0) !important;
+    width: 1px !important;
+    height: 1px !important;
+    border: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    outline: 0 !important;
+    left: 0px !important;
+    top: 0px !important;
+}
+
+.select2-display-none {
+    display: none;
+}
+
+.select2-measure-scrollbar {
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+    width: 100px;
+    height: 100px;
+    overflow: scroll;
+}
+
+/* Retina-ize icons */
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-resolution: 2dppx)  {
+    .select2-search input,
+    .select2-search-choice-close,
+    .select2-container .select2-choice abbr,
+    .select2-container .select2-choice .select2-arrow b {
+        background-image: url("kpwebb-select2/select2x2.png") !important;
+        background-repeat: no-repeat !important;
+        background-size: 60px 40px !important;
+    }
+
+    .select2-search input {
+        background-position: 100% -21px !important;
+    }
+}
+
+/**
+ * Select2 Bootstrap CSS
+ * Compatible with Select2 3.3.2, 3.4.1, 3.4.2 and Twitter Bootstrap 3.0.0
+ * MIT License
+ */
+/**
+ * Reset Bootstrap 3 .form-control styles which - if applied to the
+ * original <select>-element the Select2-plugin may be run against -
+ * are copied to the .select2-container.
+ *
+ * 1. Overwrite .select2-container's original display:inline-block
+ *    with Bootstrap 3's default for .form-control, display:block;
+ *    courtesy of @juristr (@see https://github.com/fk/select2-bootstrap-css/pull/1)
+ */
+.select2-container.form-control {
+  background: transparent;
+  border: none;
+  display: block;
+  /* 1 */
+  margin: 0;
+  padding: 0;
+}
+
+/**
+ * Adjust Select2 inputs to fit Bootstrap 3 default .form-control appearance.
+ */
+.select2-container .select2-choices .select2-search-field input,
+.select2-container .select2-choice,
+.select2-container .select2-choices {
+  background: none;
+  padding: 0;
+  border-color: #cccccc;
+  border-radius: 4px;
+  color: #555555;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: white;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.select2-search input {
+  border-color: #cccccc;
+  border-radius: 4px;
+  color: #555555;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color: white;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.select2-container .select2-choices .select2-search-field input {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/**
+ * Adjust Select2 input heights to match the Bootstrap default.
+ */
+.select2-container .select2-choice {
+  height: 34px;
+  line-height: 1.42857;
+}
+
+/**
+ * Address Multi Select2's height which - depending on how many elements have been selected -
+ * may grown higher than their initial size.
+ */
+.select2-container.select2-container-multi.form-control {
+  height: auto;
+}
+
+/**
+ * Address Bootstrap 3 control sizing classes
+ * @see http://getbootstrap.com/css/#forms-control-sizes
+ */
+.select2-container.input-sm .select2-choice,
+.input-group-sm .select2-container .select2-choice {
+  height: 30px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+.select2-container.input-lg .select2-choice,
+.input-group-lg .select2-container .select2-choice {
+  height: 45px;
+  line-height: 1.33;
+  border-radius: 6px;
+}
+
+.select2-container-multi .select2-choices .select2-search-field input {
+  height: 32px;
+}
+
+.select2-container-multi.input-sm .select2-choices .select2-search-field input,
+.input-group-sm .select2-container-multi .select2-choices .select2-search-field input {
+  height: 28px;
+}
+
+.select2-container-multi.input-lg .select2-choices .select2-search-field input,
+.input-group-lg .select2-container-multi .select2-choices .select2-search-field input {
+  height: 43px;
+}
+
+/**
+ * Adjust height and line-height for .select2-search-field amd multi-select Select2 widgets.
+ *
+ * 1. Class repetition to address missing .select2-chosen in Select2 < 3.3.2.
+ */
+.select2-container-multi .select2-choices .select2-search-field input {
+  margin: 0;
+}
+
+.select2-chosen,
+.select2-choice > span:first-child,
+.select2-container .select2-choices .select2-search-field input {
+  padding: 6px 12px;
+}
+
+.input-sm .select2-chosen,
+.input-group-sm .select2-chosen,
+.input-sm .select2-choice > span:first-child,
+.input-group-sm .select2-choice > span:first-child,
+.input-sm .select2-choices .select2-search-field input,
+.input-group-sm .select2-choices .select2-search-field input {
+  padding: 5px 10px;
+}
+
+.input-lg .select2-chosen,
+.input-group-lg .select2-chosen,
+.input-lg .select2-choice > span:first-child,
+.input-group-lg .select2-choice > span:first-child,
+.input-lg .select2-choices .select2-search-field input,
+.input-group-lg .select2-choices .select2-search-field input {
+  padding: 10px 16px;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice {
+  margin-top: 5px;
+  margin-bottom: 3px;
+}
+
+.select2-container-multi.input-sm .select2-choices .select2-search-choice,
+.input-group-sm .select2-container-multi .select2-choices .select2-search-choice {
+  margin-top: 3px;
+  margin-bottom: 2px;
+}
+
+.select2-container-multi.input-lg .select2-choices .select2-search-choice,
+.input-group-lg .select2-container-multi .select2-choices .select2-search-choice {
+  line-height: 24px;
+}
+
+/**
+ * Adjust the single Select2's dropdown arrow button appearance.
+ *
+ * 1. For Select2 v.3.3.2.
+ */
+.select2-container .select2-choice .select2-arrow,
+.select2-container .select2-choice div {
+  border-left: 1px solid #cccccc;
+  background: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+.select2-dropdown-open .select2-choice .select2-arrow,
+.select2-dropdown-open .select2-choice div {
+  border-left-color: transparent;
+  background: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+
+/**
+ * Adjust the dropdown arrow button icon position for the single-select Select2 elements
+ * to make it line up vertically now that we increased the height of .select2-container.
+ *
+ * 1. Class repetition to address missing .select2-chosen in Select2 v.3.3.2.
+ */
+.select2-container .select2-choice .select2-arrow b,
+.select2-container .select2-choice div b {
+  background-position: 0 3px;
+}
+
+.select2-dropdown-open .select2-choice .select2-arrow b,
+.select2-dropdown-open .select2-choice div b {
+  background-position: -18px 3px;
+}
+
+.select2-container.input-sm .select2-choice .select2-arrow b,
+.input-group-sm .select2-container .select2-choice .select2-arrow b,
+.select2-container.input-sm .select2-choice div b,
+.input-group-sm .select2-container .select2-choice div b {
+  background-position: 0 1px;
+}
+
+.select2-dropdown-open.input-sm .select2-choice .select2-arrow b,
+.input-group-sm .select2-dropdown-open .select2-choice .select2-arrow b,
+.select2-dropdown-open.input-sm .select2-choice div b,
+.input-group-sm .select2-dropdown-open .select2-choice div b {
+  background-position: -18px 1px;
+}
+
+.select2-container.input-lg .select2-choice .select2-arrow b,
+.input-group-lg .select2-container .select2-choice .select2-arrow b,
+.select2-container.input-lg .select2-choice div b,
+.input-group-lg .select2-container .select2-choice div b {
+  background-position: 0 9px;
+}
+
+.select2-dropdown-open.input-lg .select2-choice .select2-arrow b,
+.input-group-lg .select2-dropdown-open .select2-choice .select2-arrow b,
+.select2-dropdown-open.input-lg .select2-choice div b,
+.input-group-lg .select2-dropdown-open .select2-choice div b {
+  background-position: -18px 9px;
+}
+
+/**
+ * Address Bootstrap's validation states and change Select2's border colors and focus states.
+ * Apply .has-warning, .has-danger or .has-succes to #select2-drop to match Bootstraps' colors.
+ */
+.has-warning .select2-choice,
+.has-warning .select2-choices {
+  border-color: #c09853;
+}
+.has-warning .select2-container-active .select2-choice,
+.has-warning .select2-container-multi.select2-container-active .select2-choices {
+  border-color: #a47e3c;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #dbc59e;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #dbc59e;
+}
+.has-warning.select2-drop-active {
+  border-color: #a47e3c;
+}
+.has-warning.select2-drop-active.select2-drop.select2-drop-above {
+  border-top-color: #a47e3c;
+}
+
+.has-error .select2-choice,
+.has-error .select2-choices {
+  border-color: #b94a48;
+}
+.has-error .select2-container-active .select2-choice,
+.has-error .select2-container-multi.select2-container-active .select2-choices {
+  border-color: #953b39;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #d59392;
+}
+.has-error.select2-drop-active {
+  border-color: #953b39;
+}
+.has-error.select2-drop-active.select2-drop.select2-drop-above {
+  border-top-color: #953b39;
+}
+
+.has-success .select2-choice,
+.has-success .select2-choices {
+  border-color: #468847;
+}
+.has-success .select2-container-active .select2-choice,
+.has-success .select2-container-multi.select2-container-active .select2-choices {
+  border-color: #356635;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #7aba7b;
+}
+.has-success.select2-drop-active {
+  border-color: #356635;
+}
+.has-success.select2-drop-active.select2-drop.select2-drop-above {
+  border-top-color: #356635;
+}
+
+/**
+ * Make Select2's active-styles - applied to .select2-container when the widget receives focus -
+ * fit Bootstrap 3's .form-element:focus appearance.
+ */
+.select2-container-active .select2-choice,
+.select2-container-multi.select2-container-active .select2-choices {
+  border-color: #66afe9;
+  outline: none;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+.select2-drop-active {
+  border-color: #66afe9;
+}
+
+.select2-drop-auto-width,
+.select2-drop.select2-drop-above.select2-drop-active {
+  border-top-color: #66afe9;
+}
+
+/**
+ * Select2 widgets in Bootstrap Input Groups
+ *
+ * When Select2 widgets are combined with other elements using Bootstrap 3's
+ * "Input Group" component, we don't want specific edges of the Select2 container
+ * to have a border-radius.
+ *
+ * In Bootstrap 2, input groups required a markup where these style adjustments
+ * could be bound to a CSS-class identifying if the additional elements are appended,
+ * prepended or both.
+ *
+ * Bootstrap 3 doesn't rely on these classes anymore, so we have to use our own.
+ * Use .select2-bootstrap-prepend and .select2-bootstrap-append on a Bootstrap 3 .input-group
+ * to let the contained Select2 widget know which edges should not be rounded as they are
+ * directly followed by another element.
+ *
+ * @see http://getbootstrap.com/components/#input-groups
+ */
+.input-group.select2-bootstrap-prepend [class^="select2-choice"] {
+  border-bottom-left-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
+
+.input-group.select2-bootstrap-append [class^="select2-choice"] {
+  border-bottom-right-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+.select2-dropdown-open [class^="select2-choice"] {
+  border-bottom-right-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.select2-dropdown-open.select2-drop-above [class^="select2-choice"] {
+  border-top-right-radius: 0 !important;
+  border-top-left-radius: 0 !important;
+}
+
+/**
+ * Adjust Select2's choices hover and selected styles to match Bootstrap 3's default dropdown styles.
+ */
+.select2-results .select2-highlighted {
+  color: white;
+  background-color: #428bca;
+}
+
+/**
+ * Adjust alignment of Bootstrap 3 buttons in Bootstrap 3 Input Groups to address
+ * Multi Select2's height which - depending on how many elements have been selected -
+ * may grown higher than their initial size.
+ */
+.select2-bootstrap-append .select2-container-multiple,
+.select2-bootstrap-append .input-group-btn,
+.select2-bootstrap-append .input-group-btn .btn,
+.select2-bootstrap-prepend .select2-container-multiple,
+.select2-bootstrap-prepend .input-group-btn,
+.select2-bootstrap-prepend .input-group-btn .btn {
+  vertical-align: top;
+}
+
+/**
+ * Make Multi Select2's choices match Bootstrap 3's default button styles.
+ */
+.select2-container-multi .select2-choices .select2-search-choice {
+  color: #555555;
+  background: white;
+  border-color: #cccccc;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.select2-container-multi .select2-choices .select2-search-choice-focus {
+  background: #ebebeb;
+  border-color: #adadad;
+  color: #333333;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/**
+ * Address Multi Select2's choice close-button vertical alignment.
+ */
+.select2-search-choice-close {
+  margin-top: -7px;
+  top: 50%;
+}
+
+/**
+ * Adjust the single Select2's clear button position (used to reset the select box
+ * back to the placeholder value and visible once a selection is made
+ * activated by Select2's "allowClear" option).
+ */
+.select2-container .select2-choice abbr {
+  top: 50%;
+}
+
+/**
+ * Adjust "no results" and "selection limit" messages to make use
+ * of Bootstrap 3's default "Alert" style.
+ *
+ * @see http://getbootstrap.com/components/#alerts-default
+ */
+.select2-results .select2-no-results,
+.select2-results .select2-searching,
+.select2-results .select2-selection-limit {
+  background-color: #fcf8e3;
+  color: #c09853;
+}
+
+/**
+ * Address disabled Select2 styles.
+ *
+ * 1. For Select2 v.3.3.2.
+ * 2. Revert border-left:0 inherited from Select2's CSS to prevent the arrow
+ *    from jumping when switching from disabled to enabled state and vice versa.
+ */
+.select2-container.select2-container-disabled .select2-choice,
+.select2-container.select2-container-disabled .select2-choices {
+  cursor: not-allowed;
+  background-color: #eeeeee;
+  border-color: #cccccc;
+}
+.select2-container.select2-container-disabled .select2-choice .select2-arrow,
+.select2-container.select2-container-disabled .select2-choice div,
+.select2-container.select2-container-disabled .select2-choices .select2-arrow,
+.select2-container.select2-container-disabled .select2-choices div {
+  background-color: transparent;
+  border-left: 1px solid transparent;
+  /* 2 */
+}
+
+/**
+ * Address Select2's loading indicator position - which should not stick
+ * to the right edge of Select2's search input.
+ *
+ * 1. in .select2-search input
+ * 2. in Multi Select2's .select2-search-field input
+ * 3. in the status-message of infinite-scroll with remote data (@see http://ivaynberg.github.io/select2/#infinite)
+ *
+ * These styles alter Select2's default background-position of 100%
+ * and supply the new background-position syntax to browsers which support it:
+ *
+ * 1. Android, Safari < 6/Mobile, IE<9: change to a relative background-position of 99%
+ * 2. Chrome 25+, Firefox 13+, IE 9+, Opera 10.5+: use the new CSS3-background-position syntax
+ *
+ * @see http://www.w3.org/TR/css3-background/#background-position
+ *
+ * @todo Since both Select2 and Bootstrap 3 only support IE8 and above,
+ * we could use the :after-pseudo-element to display the loading indicator.
+ * Alternatively, we could supply an altered loading indicator image which already
+ * contains an offset to the right.
+ */
+.select2-search input.select2-active,
+.select2-container-multi .select2-choices .select2-search-field input.select2-active,
+.select2-more-results.select2-active {
+  background-position: 99%;
+  /* 4 */
+  background-position: right 4px center;
+  /* 5 */
+}
 
 .leaflet-label {
 	background: rgb(235, 235, 235);
@@ -493,15 +1129,30 @@
 	cursor: pointer;
 }
 
+.leaflet-label:before,
+.leaflet-label:after {
+	border-top: 6px solid transparent;
+	border-bottom: 6px solid transparent;
+	content: none;
+	position: absolute;
+	top: 5px;
+}
+
 .leaflet-label:before {
 	border-right: 6px solid black;
 	border-right-color: inherit;
-	border-top: 6px solid transparent;
-	border-bottom: 6px solid transparent;
-	content: "";
-	position: absolute;
-	top: 5px;
 	left: -10px;
+}
+
+.leaflet-label:after {
+	border-left: 6px solid black;
+	border-left-color: inherit;
+	right: -10px;
+}
+
+.leaflet-label-right:before,
+.leaflet-label-left:after {
+	content: "";
 }
 
 
@@ -736,7 +1387,7 @@ textarea.input-lg{height:auto;}
 .btn-block{display:block;width:100%;padding-left:0;padding-right:0;}
 .btn-block+.btn-block{margin-top:5px;}
 input[type="submit"].btn-block,input[type="reset"].btn-block,input[type="button"].btn-block{width:100%;}
-@font-face{font-family:'Glyphicons Halflings';src:url(".//bootstrap/css/../fonts/glyphicons-halflings-regular.eot");src:url(".//bootstrap/css/../fonts/glyphicons-halflings-regular.eot?#iefix") format('embedded-opentype'),url(".//bootstrap/css/../fonts/glyphicons-halflings-regular.woff") format('woff'),url(".//bootstrap/css/../fonts/glyphicons-halflings-regular.ttf") format('truetype'),url(".//bootstrap/css/../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular") format('svg');}.glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;}
+@font-face{font-family:'Glyphicons Halflings';src:url("bootstrap/fonts/glyphicons-halflings-regular.eot");src:url("bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix") format('embedded-opentype'),url("bootstrap/fonts/glyphicons-halflings-regular.woff") format('woff'),url("bootstrap/fonts/glyphicons-halflings-regular.ttf") format('truetype'),url("bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular") format('svg');}.glyphicon{position:relative;top:1px;display:inline-block;font-family:'Glyphicons Halflings';font-style:normal;font-weight:normal;line-height:1;-webkit-font-smoothing:antialiased;}
 .glyphicon-asterisk:before{content:"\2a";}
 .glyphicon-plus:before{content:"\2b";}
 .glyphicon-euro:before{content:"\20ac";}
@@ -1351,438 +2002,6 @@ th.visible-print,td.visible-print{display:none !important;}
 .collapse{display:none;}.collapse.in{display:block;}
 .collapsing{position:relative;height:0;overflow:hidden;-webkit-transition:height 0.35s ease;transition:height 0.35s ease;}
 
-/**
- * selectize.bootstrap3.css (v0.7.4) - Bootstrap 3 Theme
- * Copyright (c) 2013 Brian Reavis & contributors
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
- * file except in compliance with the License. You may obtain a copy of the License at:
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software distributed under
- * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
- * ANY KIND, either express or implied. See the License for the specific language
- * governing permissions and limitations under the License.
- *
- * @author Brian Reavis <brian@thirdroute.com>
- */
-
-.selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
-  background: #f2f2f2 !important;
-  background: rgba(0, 0, 0, 0.06) !important;
-  border: 0 none !important;
-  visibility: visible !important;
-  -webkit-box-shadow: inset 0 0 12px 4px #ffffff;
-          box-shadow: inset 0 0 12px 4px #ffffff;
-}
-
-.selectize-control.plugin-drag_drop .ui-sortable-placeholder::after {
-  content: '!';
-  visibility: hidden;
-}
-
-.selectize-control.plugin-drag_drop .ui-sortable-helper {
-  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.selectize-dropdown-header {
-  position: relative;
-  padding: 3px 12px;
-  background: #f8f8f8;
-  border-bottom: 1px solid #d0d0d0;
-  -webkit-border-radius: 0px 0px 0 0;
-     -moz-border-radius: 0px 0px 0 0;
-          border-radius: 0px 0px 0 0;
-}
-
-.selectize-dropdown-header-close {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  margin-top: -12px;
-  font-size: 20px !important;
-  line-height: 20px;
-  color: #333333;
-  opacity: 0.4;
-}
-
-.selectize-dropdown-header-close:hover {
-  color: #000000;
-}
-
-.selectize-dropdown.plugin-optgroup_columns .optgroup {
-  float: left;
-  border-top: 0 none;
-  border-right: 1px solid #f2f2f2;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.selectize-dropdown.plugin-optgroup_columns .optgroup:last-child {
-  border-right: 0 none;
-}
-
-.selectize-dropdown.plugin-optgroup_columns .optgroup:before {
-  display: none;
-}
-
-.selectize-dropdown.plugin-optgroup_columns .optgroup-header {
-  border-top: 0 none;
-}
-
-.selectize-control.plugin-remove_button .item {
-  position: relative;
-  padding-right: 24px !important;
-}
-
-.selectize-control.plugin-remove_button .item .remove {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  display: inline-block;
-  width: 17px;
-  padding: 1px 0 0 0;
-  font-size: 12px;
-  font-weight: bold;
-  color: inherit;
-  text-align: center;
-  text-decoration: none;
-  vertical-align: middle;
-  border-left: 1px solid rgba(0, 0, 0, 0);
-  -webkit-border-radius: 0 0px 0px 0;
-     -moz-border-radius: 0 0px 0px 0;
-          border-radius: 0 0px 0px 0;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.selectize-control.plugin-remove_button .item .remove:hover {
-  background: rgba(0, 0, 0, 0.05);
-}
-
-.selectize-control.plugin-remove_button .item.active .remove {
-  border-left-color: rgba(0, 0, 0, 0);
-}
-
-.selectize-control {
-  position: relative;
-}
-
-.selectize-dropdown,
-.selectize-input,
-.selectize-input input {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  -webkit-font-smoothing: inherit;
-  line-height: 20px;
-  color: #333333;
-}
-
-.selectize-input,
-.selectize-control.single .selectize-input.focus {
-  display: inline-block;
-  cursor: text;
-  background: #ffffff;
-}
-
-.selectize-input {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  width: 100%;
-  padding: 6px 12px;
-  overflow: hidden;
-  border: 1px solid #cccccc;
-  -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-          border-radius: 0px;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.selectize-control.multi .selectize-input.has-items {
-  padding: 5px 12px 2px;
-}
-
-.selectize-input.full {
-  background-color: #ffffff;
-}
-
-.selectize-input.disabled,
-.selectize-input.disabled * {
-  cursor: default !important;
-}
-
-.selectize-input.focus {
-  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-          box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
-}
-
-.selectize-input.dropdown-active {
-  -webkit-border-radius: 0px 0px 0 0;
-     -moz-border-radius: 0px 0px 0 0;
-          border-radius: 0px 0px 0 0;
-}
-
-.selectize-input > * {
-  display: -moz-inline-stack;
-  display: inline-block;
-  *display: inline;
-  vertical-align: baseline;
-  zoom: 1;
-}
-
-.selectize-control.multi .selectize-input > div {
-  padding: 1px 3px;
-  margin: 0 3px 3px 0;
-  color: #333333;
-  cursor: pointer;
-  background: #efefef;
-  border: 0 solid rgba(0, 0, 0, 0);
-}
-
-.selectize-control.multi .selectize-input > div.active {
-  color: #ffffff;
-  background: #428bca;
-  border: 0 solid rgba(0, 0, 0, 0);
-}
-
-.selectize-control.multi .selectize-input.disabled > div,
-.selectize-control.multi .selectize-input.disabled > div.active {
-  color: #808080;
-  background: #ffffff;
-  border: 0 solid rgba(77, 77, 77, 0);
-}
-
-.selectize-input > input {
-  max-width: 100% !important;
-  max-height: none !important;
-  min-height: 0 !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  line-height: inherit !important;
-  text-indent: 0 !important;
-  background: none !important;
-  border: 0 none !important;
-  -webkit-box-shadow: none !important;
-          box-shadow: none !important;
-  -webkit-user-select: auto !important;
-}
-
-.selectize-input > input:focus {
-  outline: none !important;
-}
-
-.selectize-input::after {
-  display: block;
-  clear: left;
-  content: ' ';
-}
-
-.selectize-input.dropdown-active::before {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  display: block;
-  height: 1px;
-  background: #ffffff;
-  content: ' ';
-}
-
-.selectize-dropdown {
-  position: absolute;
-  z-index: 10;
-  margin: -1px 0 0 0;
-  background: #ffffff;
-  border: 1px solid #cccccc;
-  border-top: 0 none;
-  -webkit-border-radius: 0 0 0px 0px;
-     -moz-border-radius: 0 0 0px 0px;
-          border-radius: 0 0 0px 0px;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  -webkit-box-sizing: border-box;
-     -moz-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.selectize-dropdown [data-selectable] {
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.selectize-dropdown [data-selectable] .highlight {
-  background: rgba(255, 237, 40, 0.4);
-  -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-          border-radius: 0px;
-}
-
-.selectize-dropdown [data-selectable],
-.selectize-dropdown .optgroup-header {
-  padding: 3px 12px;
-}
-
-.selectize-dropdown .optgroup:first-child .optgroup-header {
-  border-top: 0 none;
-}
-
-.selectize-dropdown .optgroup-header {
-  color: #999999;
-  cursor: default;
-  background: #ffffff;
-}
-
-.selectize-dropdown .active {
-  color: #ffffff;
-  background-color: #428bca;
-}
-
-.selectize-dropdown .active.create {
-  color: #ffffff;
-}
-
-.selectize-dropdown .create {
-  color: rgba(51, 51, 51, 0.5);
-}
-
-.selectize-dropdown-content {
-  max-height: 200px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.selectize-control.single .selectize-input,
-.selectize-control.single .selectize-input input {
-  cursor: pointer;
-}
-
-.selectize-control.single .selectize-input.focus,
-.selectize-control.single .selectize-input.focus input {
-  cursor: text;
-}
-
-.selectize-control.single .selectize-input:after {
-  position: absolute;
-  top: 50%;
-  right: 17px;
-  display: block;
-  width: 0;
-  height: 0;
-  margin-top: -3px;
-  border-color: #000000 transparent transparent transparent;
-  border-style: solid;
-  border-width: 5px 5px 0 5px;
-  content: ' ';
-}
-
-.selectize-control.single .selectize-input.dropdown-active:after {
-  margin-top: -4px;
-  border-color: transparent transparent #000000 transparent;
-  border-width: 0 5px 5px 5px;
-}
-
-.selectize-control .selectize-input.disabled {
-  background-color: #ffffff;
-  opacity: 0.5;
-}
-
-.selectize-dropdown,
-.selectize-dropdown.form-control {
-  z-index: 1000;
-  height: auto;
-  padding: 0;
-  margin: 2px 0 0 0;
-  background: #ffffff;
-  border: 1px solid #cccccc;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-          border-radius: 0px;
-  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
-}
-
-.selectize-dropdown .optgroup-header {
-  font-size: 12px;
-  line-height: 1.428571429;
-}
-
-.selectize-dropdown .optgroup:first-child:before {
-  display: none;
-}
-
-.selectize-dropdown .optgroup:before {
-  display: block;
-  height: 1px;
-  margin: 9px 0;
-  margin-right: -12px;
-  margin-left: -12px;
-  overflow: hidden;
-  background-color: #e5e5e5;
-  content: ' ';
-}
-
-.selectize-dropdown-content {
-  padding: 5px 0;
-}
-
-.selectize-dropdown-header {
-  padding: 6px 12px;
-}
-
-.selectize-input {
-  min-height: 34px;
-}
-
-.selectize-input.dropdown-active {
-  -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-          border-radius: 0px;
-}
-
-.selectize-input.dropdown-active::before {
-  display: none;
-}
-
-.selectize-input.focus {
-  border-color: #66afe9;
-  outline: 0;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-
-.selectize-control.multi .selectize-input.has-items {
-  padding-right: 9px;
-  padding-left: 9px;
-}
-
-.selectize-control.multi .selectize-input > div {
-  -webkit-border-radius: 0px;
-     -moz-border-radius: 0px;
-          border-radius: 0px;
-}
-
-.form-control.selectize-control {
-  height: auto;
-  padding: 0;
-  background: none;
-  border: none;
-  -webkit-border-radius: 0;
-     -moz-border-radius: 0;
-          border-radius: 0;
-  -webkit-box-shadow: none;
-          box-shadow: none;
-}
-
 /*!
  * Datepicker for Bootstrap v3
  *
@@ -1903,71 +2122,71 @@ th.visible-print,td.visible-print{display:none !important;}
 
 
 .otp-legStep-icon-LEFT {
-    background: url(".//otp.js/lib/images/directions/left.png")
+    background: url("otpjs/lib/images/directions/left.png")
 }
 
 .otp-legStep-icon-RIGHT {
-    background: url(".//otp.js/lib/images/directions/right.png")
+    background: url("otpjs/lib/images/directions/right.png")
 }
 
 .otp-legStep-icon-HARD_LEFT {
-    background: url(".//otp.js/lib/images/directions/hard_left.png")
+    background: url("otpjs/lib/images/directions/hard_left.png")
 }
 
 .otp-legStep-icon-HARD_RIGHT {
-    background: url(".//otp.js/lib/images/directions/hard_right.png")
+    background: url("otpjs/lib/images/directions/hard_right.png")
 }
 
 .otp-legStep-icon-SLIGHTLY_LEFT {
-    background: url(".//otp.js/lib/images/directions/slightly_left.png")
+    background: url("otpjs/lib/images/directions/slightly_left.png")
 }
 
 .otp-legStep-icon-SLIGHTLY_RIGHT {
-    background: url(".//otp.js/lib/images/directions/slightly_right.png")
+    background: url("otpjs/lib/images/directions/slightly_right.png")
 }
 
 .otp-legStep-icon-TURN_LEFT {
-    background: url(".//otp.js/lib/images/directions/turn_left.png")
+    background: url("otpjs/lib/images/directions/turn_left.png")
 }
 
 .otp-legStep-icon-TURN_RIGHT {
-    background: url(".//otp.js/lib/images/directions/turn_right.png")
+    background: url("otpjs/lib/images/directions/turn_right.png")
 }
 
 .otp-legStep-icon-EXIT_LEFT {
-    background: url(".//otp.js/lib/images/directions/exit_left.png")
+    background: url("otpjs/lib/images/directions/exit_left.png")
 }
 
 .otp-legStep-icon-EXIT_RIGHT {
-    background: url(".//otp.js/lib/images/directions/exit_right.png")
+    background: url("otpjs/lib/images/directions/exit_right.png")
 }
 
 .otp-legStep-icon-UTURN_LEFT {
-    background: url(".//otp.js/lib/images/directions/uturn_left.png")
+    background: url("otpjs/lib/images/directions/uturn_left.png")
 }
 
 .otp-legStep-icon-UTURN_RIGHT {
-    background: url(".//otp.js/lib/images/directions/uturn_right.png")
+    background: url("otpjs/lib/images/directions/uturn_right.png")
 }
 
 .otp-legStep-icon-CONTINUE {
-    background: url(".//otp.js/lib/images/directions/continue.png")
+    background: url("otpjs/lib/images/directions/continue.png")
 }
 
 .otp-legStep-icon-MERGE {
-    background: url(".//otp.js/lib/images/directions/merge.png")
+    background: url("otpjs/lib/images/directions/merge.png")
 }
 
 .otp-legStep-icon-ELEVATOR {
-    background: url(".//otp.js/lib/images/directions/elevator.png")
+    background: url("otpjs/lib/images/directions/elevator.png")
 }
 
 .otp-legStep-icon-CIRCLE_CLOCKWISE {
-    background: url(".//otp.js/lib/images/directions/circle_clockwise.png")
+    background: url("otpjs/lib/images/directions/circle_clockwise.png")
 }
 
 .otp-legStep-icon-CIRCLE_COUNTERCLOCKWISE {
-    background: url(".//otp.js/lib/images/directions/circle_counterclockwise.png")
+    background: url("otpjs/lib/images/directions/circle_counterclockwise.png")
 }
 
 
@@ -1982,38 +2201,38 @@ th.visible-print,td.visible-print{display:none !important;}
 }
 
 .otp-legMode-icon-WALK {
-    background: url(".//otp.js/lib/images/mode/walk.png")
+    background: url("otpjs/lib/images/mode/walk.png")
 }
 
 .otp-legMode-icon-BUS {
-    background: url(".//otp.js/lib/images/mode/bus.png")
+    background: url("otpjs/lib/images/mode/bus.png")
 }
 
 .otp-legMode-icon-RAIL {
-    background: url(".//otp.js/lib/images/mode/rail.png")
+    background: url("otpjs/lib/images/mode/rail.png")
 }
 
 .otp-legMode-icon-BICYCLE {
-    background: url(".//otp.js/lib/images/mode/bicycle.png")
+    background: url("otpjs/lib/images/mode/bicycle.png")
 }
 
 .otp-legMode-icon-SUBWAY {
-    background: url(".//otp.js/lib/images/mode/subway.png")
+    background: url("otpjs/lib/images/mode/subway.png")
 }
 
 .otp-legMode-icon-TRAM {
-    background: url(".//otp.js/lib/images/mode/tram.png")
+    background: url("otpjs/lib/images/mode/tram.png")
 }
 
 .otp-legMode-icon-arrow-right {
-    background: url(".//otp.js/lib/images/mode/arrow_right.png")
+    background: url("otpjs/lib/images/mode/arrow_right.png")
 }
 
 .otp-legMode-icon-arrow-left {
-    background: url(".//otp.js/lib/images/mode/arrow_left.png")
+    background: url("otpjs/lib/images/mode/arrow_left.png")
 }
 .otp-startFlagIcon {
-	background: url(".//otp.js/lib/images/marker-flag-start-shadowed.png");
+	background: url("otpjs/lib/images/marker-flag-start-shadowed.png");
 	width: 48px;
 	height: 49px;
 	margin-left: -44px;
@@ -2021,7 +2240,7 @@ th.visible-print,td.visible-print{display:none !important;}
 }
 
 .otp-endFlagIcon {
-	background: url(".//otp.js/lib/images/marker-flag-end-shadowed.png");
+	background: url("otpjs/lib/images/marker-flag-end-shadowed.png");
 	width: 48px;
 	height: 49px;
 	margin-left: -44px;
@@ -2029,7 +2248,7 @@ th.visible-print,td.visible-print{display:none !important;}
 }
 
 .otp-crosshairIcon {
-    background: url(".//otp.js/lib/images/marker-crosshair.png");
+    background: url("otpjs/lib/images/marker-crosshair.png");
     width: 11px;
     height: 11px;
     margin-left: -6px;
@@ -2052,35 +2271,35 @@ th.visible-print,td.visible-print{display:none !important;}
 }
 
 .otp-legBubble-icon-nw {
-    background: url(".//otp.js/lib/images/legbubble/nw.png");
+    background: url("otpjs/lib/images/legbubble/nw.png");
 }
 
 .otp-legBubble-icon-ne {
-    background: url(".//otp.js/lib/images/legbubble/ne.png");
+    background: url("otpjs/lib/images/legbubble/ne.png");
 }
 
 .otp-legBubble-icon-sw {
-    background: url(".//otp.js/lib/images/legbubble/sw.png");
+    background: url("otpjs/lib/images/legbubble/sw.png");
 }
 
 .otp-legBubble-icon-se {
-    background: url(".//otp.js/lib/images/legbubble/se.png");
+    background: url("otpjs/lib/images/legbubble/se.png");
 }
 
 .otp-legBubble-icon-nw-highlight {
-    background: url(".//otp.js/lib/images/legbubble/nw_highlight.png");
+    background: url("otpjs/lib/images/legbubble/nw_highlight.png");
 }
 
 .otp-legBubble-icon-ne-highlight {
-    background: url(".//otp.js/lib/images/legbubble/ne_highlight.png");
+    background: url("otpjs/lib/images/legbubble/ne_highlight.png");
 }
 
 .otp-legBubble-icon-sw-highlight {
-    background: url(".//otp.js/lib/images/legbubble/sw_highlight.png");
+    background: url("otpjs/lib/images/legbubble/sw_highlight.png");
 }
 
 .otp-legBubble-icon-se-highlight {
-    background: url(".//otp.js/lib/images/legbubble/se_highlight.png");
+    background: url("otpjs/lib/images/legbubble/se_highlight.png");
 }
 
 
@@ -2096,59 +2315,59 @@ th.visible-print,td.visible-print{display:none !important;}
 
 
 .otp-legBubble-arrow-right {
-    background: url(".//otp.js/lib/images/mode/arrow_right.png");
+    background: url("otpjs/lib/images/mode/arrow_right.png");
     width: 8px;
     height: 16px;
 }
 
 .otp-legBubble-arrow-left {
-    background: url(".//otp.js/lib/images/mode/arrow_left.png");
+    background: url("otpjs/lib/images/mode/arrow_left.png");
     width: 8px;
     height: 16px;
 }
 
 .otp-modeIcon-BICYCLE {
-    background: url(".//otp.js/lib/images/mode/bicycle.png");
+    background: url("otpjs/lib/images/mode/bicycle.png");
     width: 16px; height: 16px;
 }
 
 .otp-modeIcon-WALK {
-    background: url(".//otp.js/lib/images/mode/walk.png");
+    background: url("otpjs/lib/images/mode/walk.png");
     width: 10px; height: 16px;
 }
 
 .otp-modeIcon-BUS {
-    background: url(".//otp.js/lib/images/mode/bus.png");
+    background: url("otpjs/lib/images/mode/bus.png");
     width: 11px; height: 16px;
 }
 
 .otp-modeIcon-RAIL {
-    background: url(".//otp.js/lib/images/mode/rail.png");
+    background: url("otpjs/lib/images/mode/rail.png");
     width: 12px; height: 16px;
 }
 
 .otp-modeIcon-TRAM {
-    background: url(".//otp.js/lib/images/mode/tram.png");
+    background: url("otpjs/lib/images/mode/tram.png");
     width: 11px; height: 16px;
 }
 
 .otp-modeIcon-SUBWAY {
-    background: url(".//otp.js/lib/images/mode/subway.png");
+    background: url("otpjs/lib/images/mode/subway.png");
     width: 14px; height: 16px;
 }
 
 .otp-modeIcon-FERRY {
-    background: url(".//otp.js/lib/images/mode/ferry.png");
+    background: url("otpjs/lib/images/mode/ferry.png");
     width: 16px; height: 16px;
 }
 
 .otp-modeIcon-GONDOLA {
-    background: url(".//otp.js/lib/images/mode/gondola.png");
+    background: url("otpjs/lib/images/mode/gondola.png");
     width: 15px; height: 16px;
 }
 
 .otp-modeIcon-CAR {
-    background: url(".//otp.js/lib/images/mode/car.png");
+    background: url("otpjs/lib/images/mode/car.png");
     width: 15px; height: 16px;
 }
 
@@ -2195,7 +2414,7 @@ th.visible-print,td.visible-print{display:none !important;}
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
-	background: url(".//otp.js/lib/images/topo-control-icon.png");
+	background: url("otpjs/lib/images/topo-control-icon.png");
 	width: 28px;
 	height: 28px;
 	margin: 4px;
@@ -2210,57 +2429,4 @@ th.visible-print,td.visible-print{display:none !important;}
 	left: 0px;
 	/*background: blue;*/
 	margin: 4px;
-}
-
-body {
-	font-family: sans-serif;
-	padding: 15px;
-    margin: 0;
-    overflow: hidden;
-    max-height: 100%;
-
-}
-
-.row {
-	margin-bottom: 10px;
-}
-
-
-.title {
-	display: block;
-}
-
-.description {
-	font-size: 12px;
-	display: block;
-	opacity: 0.5;
-	white-space: nowrap;
-	width: 100%;
-	text-overflow: ellipsis;
-	overflow: hidden;
-}
-
-.well {
-	padding: 10px;
-}
-
-#itineraries {
-
-	overflow-y: auto;
-	padding-right: 5px;
-}
-
-.bikeTriangleControl {
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-
-
-#map {
-	border: thin solid #aaa;
-	margin-left: 5px;
 }

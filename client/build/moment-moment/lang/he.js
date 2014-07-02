@@ -1,1 +1,1 @@
-/home/demory/dev/otp/js/demory/otp.js/components/moment-moment/lang/he.js
+/home/demory/dev/otp/js/otp.js/components/moment-moment/lang/he.js
