@@ -32871,7 +32871,7 @@ var requestFormTemplate = Handlebars.compile([\n\
 \n\
                      '<div class=\"row arriveByControl\">', \n\
                         '<div class=\"col-md-12\">', \n\
-                            '<select id=\"arriveBy\" class=\"apiParam form-control\" placeholder=\"Arrive\"><option value=\"true\">Arrive at</option><option value=\"false\" selected>Depart by</option></select>', \n\
+                            '<select id=\"arriveBy\" class=\"apiParam form-control\" placeholder=\"Arrive\"><option value=\"true\" selected>Arrive at</option><option value=\"false\">Depart by</option></select>', \n\
                         '</div>', \n\
                     '</div>', \n\
 \n\
@@ -32926,9 +32926,9 @@ var requestFormTemplate = Handlebars.compile([\n\
                                 '<select id=\"maxWalkDistance\" class=\"apiParam form-control\" placeholder=\"Arrive\">', \n\
                                     '<option value=\"250\">1/4 km</option>', \n\
                                     '<option value=\"500\">1/2 km</option>', \n\
-                                    '<option value=\"1000\" selected>1 km</option>', \n\
+                                    '<option value=\"1000\">1 km</option>', \n\
                                     '<option value=\"2500\">2.5 km</option>', \n\
-                                    '<option value=\"5000\">5 km</option>', \n\
+                                    '<option value=\"5000\" selected>5 km</option>', \n\
                                 '</select>', \n\
                             '</div>', \n\
                         '{{/metric}}',\n\
@@ -32938,9 +32938,9 @@ var requestFormTemplate = Handlebars.compile([\n\
                                     '<option value=\"402\">1/4 mile</option>', \n\
                                     '<option value=\"804\">1/2 mile</option>', \n\
                                     '<option value=\"1223\">3/4 mile</option>', \n\
-                                    '<option value=\"1609\" selected>1 mile</option>', \n\
+                                    '<option value=\"1609\">1 mile</option>', \n\
                                     '<option value=\"3218\">2 miles</option>', \n\
-                                    '<option value=\"4828\">3 miles</option>', \n\
+                                    '<option value=\"4828\" selected>3 miles</option>', \n\
                                 '</select>', \n\
                             '</div>', \n\
                         '{{/metric}}',\n\
